@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Front Desk — Adeleke University Health Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="receptionist.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <div class="topbar-title">Adaobi Chukwu</div>
+        <div class="topbar-sub">Receptionist</div>
+      </div>
+      <button
+        class="btn-ghost"
+        onclick="window.location.href='index.html'"
+      >
+        Log Out
+      </button>
+    </header>
+
+    <main class="body">
+      <!-- ============ SEARCH CARD ============ -->
+      <div class="card">
+           <div class="card-title">Find a Student or Staff Member</div>
+         <div class="search-row">
+           <input
+            id="search-input"
+            placeholder="Enter matric number or staff ID (e.g. 24/1234)"
+            onkeydown="if (event.key === 'Enter') search();"
+            />
+           <button class="btn-primary" onclick="search()">Search</button>
+         </div>
+         <div id="recent-searches"></div>
+         <div id="search-result"></div>
+      </div>
+
+      <!-- ============ BOOKED APPOINTMENTS CARD ============ -->
+      <div class="card">
+        <div class="card-title-row">
+          <div class="card-title" style="margin-bottom: 0">
+            Booked Appointments
+          </div>
+          <select id="day-filter" onchange="renderAppointments()">
+            <option value="all">All</option>
+            <option value="today">Today</option>
+            <option value="yesterday">Yesterday</option>
+            <option value="thisWeek">This Week</option>
+            <option value="lastWeek">Last Week</option>
+            <option value="last2Weeks">Last 2 Weeks</option>
+            <option value="past3Months">Past 3 Months</option>
+          </select>
+        </div>
+        <div id="appts-table"></div>
+      </div>
+    </main>
+
+    <!-- ============ BOOK APPOINTMENT MODAL ============ -->
+    <div class="modal-backdrop" id="modal-backdrop">
+      <div class="modal">
+        <h3>Book Appointment</h3>
+        <div class="field">
+          <label>Patient</label>
+          <input id="apt-patient-display" disabled />
+        </div>
+        <div class="field">
+          <label>Date</label>
+          <input id="apt-date" type="date" />
+        </div>
+        <div class="field">
+          <label>Time</label>
+          <input id="apt-time" type="time" />
+        </div>
+        <div id="TD-error"></div>
+        <div class="modal-actions">
+          <button class="btn-ghost" onclick="closeModal()">Cancel</button>
+          <button class="btn-primary" onclick="confirmBooking()">
+            Book Appointment
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="receptionist.js"></script>
+  </body>
+</html>
