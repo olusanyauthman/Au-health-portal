@@ -1,0 +1,581 @@
+:root {
+  --blue: #1a2e6b;
+  --blue-dark: #12204d;
+  --blue-tint: #e8ecfa;
+  --yellow: #ffc72c;
+  --yellow-tint: #fff6de;
+  --ink: #16204a;
+  --ink-soft: #4a5578;
+  --ink-faint: #8a92b0;
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --line: #d7dbea;
+  --accent-warn: #b3471c;
+  --accent-warn-tint: #fbe7df;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+  font-family: "Merriweather", serif;
+  margin: 0;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 36px 20px;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 480px;
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 32px 30px 28px 30px;
+  border: 1px solid var(--line);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 20px;
+}
+
+.brand img {
+  height: 34px;
+  width: auto;
+  display: block;
+}
+
+.brand-name {
+  font-family: "Merriweather", serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.brand-sub {
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+.form-card h1 {
+  font-size: 20px;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.form-sub {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin-bottom: 22px;
+}
+
+.type-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 22px;
+  background: var(--bg);
+  padding: 4px;
+  border-radius: 10px;
+}
+
+.type-toggle button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 7px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--ink-soft);
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.type-toggle button.active {
+  background: var(--surface);
+  color: var(--blue);
+  box-shadow: 0 1px 2px rgba(22, 32, 74, 0.08);
+}
+
+.field {
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 5px;
+  display: block;
+}
+
+label .hint {
+  font-weight: 400;
+  color: var(--ink-faint);
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 13.5px;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  outline: none;
+  width: 100%;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--blue);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 13px;
+  border-radius: 9px;
+  border: none;
+  background: var(--blue);
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 6px;
+  transition:
+    background 0.15s,
+    transform 0.1s;
+}
+
+.btn-submit:hover {
+  background: var(--blue-dark);
+}
+
+.btn-submit:active {
+  transform: scale(0.98);
+}
+
+.error-msg {
+  background: var(--accent-warn-tint);
+  color: var(--accent-warn);
+  font-size: 12.5px;
+  padding: 9px 12px;
+  border-radius: 7px;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+
+.privacy-note {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 16px;
+  padding: 11px 12px;
+  background: var(--yellow-tint);
+  border-radius: 8px;
+}
+
+.privacy-note svg {
+  width: 15px;
+  height: 15px;
+  color: #8a6a0d;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.privacy-note p {
+  font-size: 11.5px;
+  color: #7a5f0c;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ---- success screen (shown after submit) ---- */
+.success-view {
+  display: none;
+  text-align: center;
+}
+
+.success-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--blue-tint);
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px auto;
+}
+
+.success-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.success-view h1 {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.success-view p {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+.btn-secondary {
+  width: 100%;
+  padding: 12px;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.btn-secondary:hover {
+  border-color: var(--blue);
+}
+
+@media (max-width: 400px) {
+  .form-card {
+    padding: 28px 15px 24px 15px;
+  }
+}
+
+
+/* ============================================================
+   AU HEALTH PORTAL — STAFF LOGIN PAGE STYLESHEET
+   Used ONLY by staff.html. Kept as its own separate file —
+   register.html has its own separate CSS file too.
+   ============================================================ */
+
+:root {
+  --blue: #1A2E6B;
+  --blue-dark: #12204D;
+  --blue-tint: #E8ECFA;
+  --yellow: #FFC72C;
+  --yellow-tint: #FFF6DE;
+  --ink: #16204A;
+  --ink-soft: #4A5578;
+  --ink-faint: #8A92B0;
+  --bg: #F5F7FB;
+  --surface: #FFFFFF;
+  --line: #D7DBEA;
+  --accent-warn: #B3471C;
+  --accent-warn-tint: #FBE7DF;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+  font-family: 'Merriweather', serif;
+  margin: 0;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------
+   PAGE SHELL — centered card
+   --------------------------------------------------------- */
+.wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface);
+  border-radius: 15px;
+  padding: 34px 30px 30px 30px;
+  border: 1px solid var(--line);
+}
+
+/* ---------------------------------------------------------
+   BACK LINK
+   --------------------------------------------------------- */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 18px;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: var(--blue);
+}
+
+.back-link svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ---------------------------------------------------------
+   BRAND / LOGO
+   --------------------------------------------------------- */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 20px;
+}
+
+.brand img {
+  height: 34px;
+  width: auto;
+  display: block;
+}
+
+.brand-name {
+  font-family: 'Merriweather', serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.brand-sub {
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+.form-card h1 {
+  font-size: 20px;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.form-sub {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin-bottom: 22px;
+}
+
+/* ---------------------------------------------------------
+   FORM ELEMENTS
+   --------------------------------------------------------- */
+.field {
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 5px;
+  display: block;
+}
+
+input {
+  font-size: 13.5px;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  width: 100%;
+}
+
+input:focus {
+  border-color: var(--blue);
+}
+
+/* ---------------------------------------------------------
+   BUTTON
+   --------------------------------------------------------- */
+.btn-submit {
+  width: 100%;
+  padding: 13px;
+  border-radius: 9px;
+  border: none;
+  background: var(--blue);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.btn-submit:hover {
+  background: var(--blue-dark);
+}
+
+.btn-submit:active {
+  transform: scale(0.98);
+}
+
+/* ---------------------------------------------------------
+   ERROR MESSAGE — injected by JS into #login-error
+   --------------------------------------------------------- */
+.error-msg {
+  background: var(--accent-warn-tint);
+  color: var(--accent-warn);
+  font-size: 12.5px;
+  padding: 9px 12px;
+  border-radius: 7px;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------
+   DEMO ACCOUNTS NOTE
+   --------------------------------------------------------- */
+.demo-note {
+  font-size: 11.5px;
+  color: var(--ink-faint);
+  background: var(--bg);
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  padding: 11px 13px;
+  margin-top: 18px;
+  line-height: 1.6;
+}
+
+.demo-note strong {
+  color: var(--ink-soft);
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------
+   RESULT VIEW (shown after a successful login)
+   --------------------------------------------------------- */
+.success-view {
+  display: none;
+  text-align: center;
+}
+
+.success-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--blue-tint);
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px auto;
+}
+
+.success-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.success-view h1 {
+  font-size: 19px;
+  margin-bottom: 6px;
+}
+
+.success-view p {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.role-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--yellow-tint);
+  color: #7A5F0C;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 14px 0 20px 0;
+}

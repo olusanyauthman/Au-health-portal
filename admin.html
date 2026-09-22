@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel — Adeleke University Health Portal</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html-docx-js/dist/html-docx.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <!-- Mobile-only top bar with hamburger toggle -->
+    <div class="mobile-topbar">
+      <button class="hamburger" onclick="toggleSidebar()">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M3 6h18M3 12h18M3 18h18" />
+        </svg>
+      </button>
+      <span class="mobile-brand-text">AU Health Portal Admin</span>
+      <span style="width: 22px"></span>
+    </div>
+    <div
+      class="sidebar-backdrop"
+      id="sidebar-backdrop"
+      onclick="toggleSidebar()"
+    ></div>
+
+    <div id="app">
+      <!-- ============ LEFT NAV ============ -->
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <img src="assets/au-logo.png" alt="Adeleke University logo" />
+          <span class="brand-name">AU Health Admin</span>
+        </div>
+        <nav>
+          <button
+            class="nav-item active"
+            id="nav-dashboard"
+            onclick="switchTab('dashboard')"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <rect x="3" y="3" width="7" height="9" rx="1.5" />
+              <rect x="14" y="3" width="7" height="5" rx="1.5" />
+              <rect x="14" y="12" width="7" height="9" rx="1.5" />
+              <rect x="3" y="16" width="7" height="5" rx="1.5" />
+            </svg>
+            <span>Dashboard</span>
+          </button>
+          <button
+            class="nav-item"
+            id="nav-patients"
+            onclick="switchTab('patients')"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <circle cx="9" cy="8" r="3.2" />
+              <path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6" />
+              <circle cx="17.5" cy="7.5" r="2.4" />
+              <path d="M15.5 13.2c2.6.3 4.5 2.4 4.5 5.3" />
+            </svg>
+            <span>Patients</span>
+          </button>
+          <button
+            class="nav-item"
+            id="nav-appointments"
+            onclick="switchTab('appointments')"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <rect x="3" y="4.5" width="18" height="16" rx="2" />
+              <path d="M3 9.5h18M8 3v3M16 3v3" />
+            </svg>
+            <span>Appointments</span>
+          </button>
+          <button
+            class="nav-item"
+            id="nav-prescriptions"
+            onclick="switchTab('prescriptions')"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <path d="M6 3h6a5 5 0 010 10H9v8" />
+              <path d="M9 9h6l6 6" />
+            </svg>
+            <span>Prescriptions</span>
+          </button>
+          <button class="nav-item" id="nav-staff" onclick="switchTab('staff')">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M22 21v-2a4 4 0 00-3-3.87" />
+              <path d="M16 3.13a4 4 0 010 7.75" />
+            </svg>
+            <span>Staff Accounts</span>
+          </button>
+          <button class="nav-item" id="nav-qr" onclick="switchTab('qr')">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <rect x="3" y="3" width="7" height="7" rx="1" />
+              <rect x="14" y="3" width="7" height="7" rx="1" />
+              <rect x="3" y="14" width="7" height="7" rx="1" />
+              <path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h.01" />
+            </svg>
+            <span>QR Code</span>
+          </button>
+          <button
+            class="nav-item"
+            id="nav-reports"
+            onclick="switchTab('reports')"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <path d="M3 3v18h18" />
+              <path d="M7 15l4-5 3 3 5-7" />
+            </svg>
+            <span>Reports</span>
+          </button>
+        </nav>
+        <div class="sidebar-foot">
+          <div class="avatar">MB</div>
+          <div>
+            <div class="foot-name">Mr. Balogun</div>
+            <div class="foot-role">Admin</div>
+            <button
+              class="logout-btn"
+              onclick="window.location.href = 'index.html'"
+            >
+              Log out
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ============ MAIN CONTENT ============ -->
+      <main>
+        <!-- ---------- DASHBOARD TAB ---------- -->
+        <div id="tab-dashboard">
+          <div class="topbar">
+            <div>
+              <h1 class="page-title">Overview</h1>
+              <div class="page-sub">
+                Adeleke University Health Portal — at a glance
+              </div>
+            </div>
+          </div>
+          <div class="stat-grid" id="dashboard-stats"></div>
+          <div class="card">
+            <div class="card-title-row">
+              <div class="card-title" style="margin-bottom: 0">
+                Students &amp; Staff Who Visited
+              </div>
+              <select
+                id="visit-range-filter"
+                onchange="renderDashboardVisits()"
+              >
+                <option value="7">Last Week</option>
+                <option value="14">Last 2 Weeks</option>
+                <option value="30">Last Month</option>
+                <option value="60">Last 2 Months</option>
+                <option value="90">Last 3 Months</option>
+                <option value="120">Last 4 Months</option>
+              </select>
+            </div>
+            <div id="dashboard-recent"></div>
+          </div>
+        </div>
+
+        <!-- ---------- PATIENTS TAB ---------- -->
+        <div id="tab-patients" style="display: none">
+          <div class="topbar">
+            <div>
+              <h1 class="page-title">Patients</h1>
+              <div class="page-sub">
+                Everyone registered on the AU Health Portal, A–Z
+              </div>
+            </div>
+          </div>
+          <div id="patients-list-view">
+            <div class="card">
+              <input
+                id="patient-search"
+                placeholder="Search by name..."
+                oninput="renderPatientsList()"
+              />
+            </div>
+            <div class="card" style="padding: 6px 20px">
+              <div id="az-patients"></div>
+            </div>
+          </div>
+          <div id="patient-detail-view" style="display: none"></div>
+        </div>
+
+        <!-- ---------- APPOINTMENTS TAB ---------- -->
+        <div id="tab-appointments" style="display: none">
+          <div class="topbar">
+            <div>
+              <h1 class="page-title">Appointments</h1>
+              <div class="page-sub">Every appointment across all doctors</div>
+            </div>
+            <select id="appt-filter" onchange="renderAppointments()">
+              <option value="all">All statuses</option>
+              <option value="Pending">Pending</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+          <div class="card"><div id="appointments-table"></div></div>
+        </div>
+
+        <!-- ---------- PRESCRIPTIONS TAB ---------- -->
+        <div id="tab-prescriptions" style="display: none">
+          <div class="topbar">
+            <div>
+              <h1 class="page-title">Prescriptions</h1>
+              <div class="page-sub">
+                Every prescription across all doctors — all responded to and
+                completed
+              </div>
+            </div>
+          </div>
+          <div class="card"><div id="prescriptions-admin-table"></div></div>
+        </div>
+
+        <!-- ---------- STAFF ACCOUNTS TAB ---------- -->
+        <div id="tab-staff" style="display: none">
+          <div class="topbar">
+            <div>
+              <h1 class="page-title">Staff Accounts</h1>
+              <div class="page-sub">
+                Add or remove staff logins for reception and doctors
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="openStaffModal()">
+              + Add Staff
+            </button>
+          </div>
+          <div class="card"><div id="staff-table"></div></div>
+        </div>
+
+        <!-- ---------- QR CODE TAB ---------- -->
+        <div id="tab-qr" style="display: none">
+          <div class="topbar">
+            <div>
+              <h1 class="page-title">Registration QR Code</h1>
+              <div class="page-sub">
+                Print or display this at the clinic for students &amp; staff to
+                scan
+              </div>
+            </div>
+          </div>
+          <div class="card" style="max-width: 420px">
+            <div class="qr-box"><div id="qr-canvas"></div></div>
+            <div class="field" style="margin-top: 16px">
+              <label>Registration Page URL</label>
+              <input
+                id="qr-url-input"
+                value="https://auhealthportal.example/register.html"
+              />
+            </div>
+            <button class="btn btn-primary" onclick="regenerateQr()">
+              Regenerate QR Code
+            </button>
+            <div class="demo-note">
+              Update the URL above once your registration page is live, then
+              click Regenerate — the QR code updates instantly and can be
+              downloaded or printed for the clinic wall.
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- REPORTS TAB ---------- -->
+        <div id="tab-reports" style="display: none">
+          <div class="topbar">
+            <div>
+              <h1 class="page-title">Reports &amp; Analytics</h1>
+              <div class="page-sub">
+                A quick read on how the clinic is being used
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Export Report</div>
+            <div class="field">
+              <label>Date Range</label>
+              <select id="export-range">
+                <option value="30">This Month</option>
+                <option value="60">Last 2 Months</option>
+                <option value="90">Last 3 Months</option>
+                <option value="120">Last 4 Months</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Admin Name</label>
+              <input id="export-admin-name" placeholder="e.g. Mr. Balogun" />
+            </div>
+            <div class="field">
+              <label>Recommendations / Notes</label>
+              <textarea
+                id="export-notes"
+                placeholder="Add any recommendations before exporting..."
+              ></textarea>
+            </div>
+            <button class="btn btn-primary" onclick="exportReport()">
+              Export Report
+            </button>
+          </div>
+          
+        </div>
+      </main>
+    </div>
+
+    <!-- ============ ADD STAFF MODAL ============ -->
+    <div class="modal-backdrop" id="staff-modal-backdrop">
+      <div class="modal">
+        <h3>Add Staff Account</h3>
+        <div class="field">
+          <label>Full Name</label
+          ><input id="staff-name" placeholder="e.g. Dr. Chinwe Obi" />
+        </div>
+        <div class="field">
+          <label>Role</label>
+          <select id="staff-role">
+            <option>Receptionist</option>
+            <option>Doctor</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Staff ID</label
+          ><input id="staff-id" placeholder="e.g. DOC-003" />
+        </div>
+        <div class="field">
+          <label>Password</label
+          ><input
+            id="staff-password"
+            type="text"
+            placeholder="Set a login password"
+          />
+        </div>
+        <div id="staff-error"></div>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" onclick="closeStaffModal()">
+            Cancel
+          </button>
+          <button class="btn btn-primary" onclick="submitStaff()">
+            Save &amp; Create Login
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CONFIRM REMOVE STAFF MODAL ============ -->
+    <div class="modal-backdrop" id="confirm-remove-backdrop">
+      <div class="modal" style="max-width: 360px">
+        <h3>Remove staff account?</h3>
+        <p
+          style="font-size: 13px; color: var(--ink-soft); margin: 0 0 4px 0"
+          id="confirm-remove-text"
+        ></p>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" onclick="closeConfirmRemove()">
+            Cancel
+          </button>
+          <button class="btn btn-danger" onclick="confirmRemoveStaff()">
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

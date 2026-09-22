@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register — Adeleke University Health Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="regAndStaf.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="form-card">
+        <!-- ============ REGISTRATION FORM VIEW ============ -->
+        <div id="form-view">
+          <div class="brand">
+            <img src="assets/au-logo.png" alt="Adeleke University logo" />
+            <div>
+              <div class="brand-name">Adeleke University</div>
+              <div class="brand-sub">Health Portal</div>
+            </div>
+          </div>
+
+          <h1>Register your health record</h1>
+          <p class="form-sub">
+            Takes about a minute. Your information is only visible to medical
+            staff.
+          </p>
+
+          <!-- toggle swaps ID label + placeholder between Student and Staff,
+               and shows/hides the Title field and the Level/Faculty fields -->
+          <div class="type-toggle">
+            <button
+              type="button"
+              id="toggle-student"
+              class="active"
+              onclick="setType('Student')"
+            >
+              I'm a Student
+            </button>
+            <button type="button" id="toggle-staff" onclick="setType('Staff')">
+              I'm a Staff
+            </button>
+          </div>
+
+          <div id="form-error"></div>
+
+          <form id="reg-form" onsubmit="return submitRegistration(event);">
+            <!-- Staff-only: Title -->
+            <div class="field" id="title-field" style="display: none">
+              <label>Title</label>
+              <select id="r-title">
+                <option value="" disabled selected>Select...</option>
+                <option>Mr.</option>
+                <option>Mrs.</option>
+                <option>Miss</option>
+                <option>Dr.</option>
+                <option>Prof.</option>
+                <option>Engr.</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Full Name</label>
+              <input id="r-name" placeholder="e.g. Olusanya Uthman" required/>
+            </div>
+
+            <div class="field">
+              <label id="id-label">Matric Number</label>
+              <input id="r-id" placeholder="e.g. 24/1234" oninput="this.value=this.value.replace(/[^0-9/]/g,'')" required/>
+            </div>
+
+            <!-- Student-only: Level + Faculty, wrapped so both can be
+                 shown/hidden together with one line of JS -->
+            <div id="student-only-fields">
+              <div class="field">
+                <label>Level</label>
+                <input id="r-level" placeholder="e.g. 200L" required />
+              </div>
+
+              <div class="field">
+                <label>Faculty</label>
+                <select id="r-faculty" required>
+                  <option value="" disabled selected>Select...</option>
+                  <option>FBMS</option>
+                  <option>FBSS</option>
+                  <option>FOE</option>
+                  <option>FOS</option>
+                  <option>FOL</option>
+                  <option>FOA</option>
+                  <option>FOHS</option>
+                  <option>FOP</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label id="department-label">Department</label>
+              <input id="r-department" placeholder="e.g. Computer Science" required/>
+            </div>
+
+            <div class="field">
+              <label>Email</label>
+              <input id="r-email" placeholder="e.g. mrcool@gmail.com" required />
+            </div>
+
+            <div class="field">
+              <label>Phone Number</label>
+              <input id="r-phone" placeholder="e.g. +2348000000001" required />
+            </div>
+
+            <div class="field">
+              <label>Date of Birth</label>
+              <input id="r-dob" type="date" required/>
+            </div>
+
+            <div class="field">
+              <label>Blood Group</label>
+              <select id="r-blood" required>
+                <option value="" disabled selected>Select...</option>
+                <option>O+</option>
+                <option>O-</option>
+                <option>A+</option>
+                <option>A-</option>
+                <option>B+</option>
+                <option>B-</option>
+                <option>AB+</option>
+                <option>AB-</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Known Allergies</label>
+              <input
+                id="r-allergies"
+                placeholder="e.g. Penicillin, or 'None known'"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label>Emergency Contact Number</label>
+              <input
+                required
+                type="tel"
+                id="r-emergency-phone"
+                placeholder="e.g. +2348000000001"
+              />
+            </div>
+
+            <div class="field">
+              <label>Contact Name</label>
+              <input
+                required
+                id="r-emergency-name"
+                placeholder="e.g. Your father's name"
+              />
+            </div>
+
+            <div class="field">
+              <label>Relationship with Contact</label>
+              <input
+                required
+                id="r-emergency-relationship"
+                placeholder="e.g. Parent, Sibling"
+              />
+            </div>
+
+            <div class="field">
+              <label
+                >Mental Health / Wellbeing Notes
+                <span class="hint">(optional)</span></label
+              >
+              <textarea
+                id="r-mental"
+                placeholder="Anything you'd like the doctor to be aware of."
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">
+              Submit Registration
+            </button>
+          </form>
+
+          <div class="privacy-note">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            <p>
+              Your information is stored securely and only accessible to Adeleke
+              University medical staff.
+            </p>
+          </div>
+        </div>
+
+        <!-- ============ SUCCESS VIEW (hidden until submit) ============ -->
+        <div id="success-view" class="success-view">
+          <div class="success-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
+            >
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
+          </div>
+          <h1>You're registered</h1>
+          <p>
+            Your record has been saved. Show your ID at the health center front
+            desk any time you visit.
+          </p>
+          <button class="btn-secondary" onclick="resetForm()">
+            Register Another Person
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="register.js"></script>
+  </body>
+</html>

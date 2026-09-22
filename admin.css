@@ -1,0 +1,796 @@
+/* ============================================================
+   AU HEALTH PORTAL — ADMIN PANEL STYLESHEET
+   Used ONLY by admin.html. Fully separate from every other
+   page's CSS file. This is the one page in the whole project
+   that's mobile-responsive, since an admin may need to check
+   things urgently from a phone.
+   ============================================================ */
+
+:root {
+    --blue: #1A2E6B;
+    --blue-dark: #12204D;
+    --blue-tint: #E8ECFA;
+    --yellow: #FFC72C;
+    --yellow-tint: #FFF6DE;
+    --ink: #16204A;
+    --ink-soft: #4A5578;
+    --ink-faint: #8A92B0;
+    --bg: #F5F7FB;
+    --surface: #FFFFFF;
+    --line: #D7DBEA;
+    --accent-warn: #B3471C;
+    --accent-warn-tint: #FBE7DF;
+    --amber: #8A5E14;
+    --amber-tint: #FBF0DC;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2 {
+    font-family: 'Merriweather', serif;
+    margin: 0;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+}
+
+#app {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ---------------------------------------------------------
+   LEFT NAV
+   --------------------------------------------------------- */
+.sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    background: var(--blue-dark);
+    color: #E8ECFA;
+    display: flex;
+    flex-direction: column;
+    padding: 22px 16px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    z-index: 50;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 4px 6px 20px 6px;
+}
+
+.brand img {
+    height: 26px;
+    width: auto;
+    display: block;
+}
+
+.brand-name {
+    font-family: 'Merriweather', serif;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: #C7CFEA;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+    transition: background 0.15s, color 0.15s;
+}
+
+.nav-item svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    opacity: 0.85;
+}
+
+.nav-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+}
+
+.nav-item.active {
+    background: #E8ECFA;
+    color: var(--blue-dark);
+}
+
+.sidebar-foot {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: #5C4400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.foot-name {
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+.foot-role {
+    font-size: 11px;
+    color: #9AA6D6;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    color: #9AA6D6;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0;
+    margin-top: 2px;
+}
+
+.logout-btn:hover {
+    color: #fff;
+}
+
+/* mobile hamburger + overlay */
+.mobile-topbar {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: var(--blue-dark);
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 60;
+}
+
+.mobile-brand-text {
+    font-family: 'Merriweather', serif;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.hamburger {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.hamburger svg {
+    width: 22px;
+    height: 22px;
+}
+
+.sidebar-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 40;
+}
+
+/* ---------------------------------------------------------
+   MAIN
+   --------------------------------------------------------- */
+main {
+    flex: 1;
+    min-width: 0;
+    padding: 26px 32px 60px 32px;
+}
+
+.page-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.page-sub {
+    color: var(--ink-soft);
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+.topbar {
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+}
+
+.card-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+.card-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+input,
+select,
+textarea {
+    font-family: inherit;
+    font-size: 13.5px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--ink);
+    outline: none;
+    width: 100%;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--blue);
+}
+
+.btn {
+    padding: 9px 15px;
+    border-radius: 8px;
+    border: none;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--blue);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: var(--blue-dark);
+}
+
+.btn-ghost {
+    background: var(--surface);
+    color: var(--ink);
+    border: 1px solid var(--line);
+}
+
+.btn-ghost:hover {
+    border-color: var(--blue);
+}
+
+.btn-danger {
+    background: var(--accent-warn-tint);
+    color: var(--accent-warn);
+    border: none;
+}
+
+.btn-danger:hover {
+    background: #F5D5C6;
+}
+
+.error-msg {
+    background: var(--accent-warn-tint);
+    color: var(--accent-warn);
+    font-size: 12.5px;
+    padding: 9px 12px;
+    border-radius: 7px;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+th {
+    text-align: left;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 500;
+    padding: 8px;
+    border-bottom: 1px solid var(--line);
+}
+
+td {
+    padding: 11px 8px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr.row-clickable {
+    cursor: pointer;
+}
+
+tr.row-clickable:hover {
+    background: var(--bg);
+}
+
+.id-chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    background: var(--bg);
+    padding: 2px 7px;
+    border-radius: 5px;
+    border: 1px solid var(--line);
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11.5px;
+    font-weight: 600;
+}
+
+.pill-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.pill.pending {
+    background: var(--amber-tint);
+    color: var(--amber);
+}
+
+.pill.pending .pill-dot {
+    background: #C98A1F;
+}
+
+.pill.completed {
+    background: var(--blue-tint);
+    color: var(--blue);
+}
+
+.pill.completed .pill-dot {
+    background: var(--blue);
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.stat-num {
+    font-family: 'Merriweather', serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 2px 0;
+}
+
+.stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+}
+
+.az-group-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ink-faint);
+    letter-spacing: 0.6px;
+    padding: 10px 8px 4px 8px;
+}
+
+.patient-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--line);
+    cursor: pointer;
+}
+
+.patient-row:hover {
+    background: var(--bg);
+}
+
+.patient-row:last-child {
+    border-bottom: none;
+}
+
+.p-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--blue-tint);
+    color: var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Merriweather', serif;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+.p-name {
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.p-meta {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+}
+
+.blood-chip {
+    margin-left: auto;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    background: var(--yellow-tint);
+    color: #7A5F0C;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--ink-soft);
+    font-size: 12.5px;
+    font-weight: 600;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 14px;
+    font-family: inherit;
+}
+
+.back-link:hover {
+    color: var(--blue);
+}
+
+.back-link svg {
+    width: 14px;
+    height: 14px;
+}
+
+.patient-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--blue-tint);
+    color: var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Merriweather', serif;
+    font-weight: 700;
+    font-size: 17px;
+    flex-shrink: 0;
+}
+
+.kv {
+    display: flex;
+    justify-content: space-between;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 13px;
+}
+
+.kv:last-child {
+    border-bottom: none;
+}
+
+.kv span:first-child {
+    color: var(--ink-soft);
+}
+
+.kv span:last-child {
+    font-weight: 600;
+    text-align: right;
+    max-width: 60%;
+}
+
+.wellbeing-note {
+    margin-top: 12px;
+    padding: 12px 14px;
+    background: var(--yellow-tint);
+    border-radius: 8px;
+    font-size: 12.5px;
+    color: #7A5F0C;
+    line-height: 1.5;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 36px 20px;
+    color: var(--ink-soft);
+}
+
+.empty-state svg {
+    width: 30px;
+    height: 30px;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    margin: 2px 0;
+    font-size: 13px;
+}
+
+.empty-title {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 13.5px;
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(22, 32, 74, 0.35);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+}
+
+.modal-backdrop.open {
+    display: flex;
+}
+
+.modal {
+    background: var(--surface);
+    border-radius: 14px;
+    width: 100%;
+    max-width: 420px;
+    padding: 24px 24px 20px 24px;
+    box-shadow: 0 20px 60px rgba(22, 32, 74, 0.25);
+}
+
+.modal h3 {
+    margin: 0 0 16px 0;
+    font-size: 17px;
+}
+
+.field {
+    margin-bottom: 13px;
+}
+
+label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 5px;
+    display: block;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.toast {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    background: var(--blue-dark);
+    color: #fff;
+    padding: 11px 16px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 8px 24px rgba(18, 32, 77, 0.3);
+    display: none;
+    align-items: center;
+    gap: 8px;
+    z-index: 200;
+}
+
+.role-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.role-badge.Doctor {
+    background: var(--blue-tint);
+    color: var(--blue);
+}
+
+.role-badge.Receptionist {
+    background: var(--yellow-tint);
+    color: #7A5F0C;
+}
+
+/* QR tab */
+.qr-box {
+    background: #fff;
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    display: inline-flex;
+}
+
+.demo-note {
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    background: var(--bg);
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    padding: 11px 13px;
+    margin-top: 14px;
+    line-height: 1.6;
+}
+
+/* Reports tab — ranked list style */
+.rank-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.rank-row:last-child {
+    border-bottom: none;
+}
+
+.rank-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--blue-tint);
+    color: var(--blue);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.rank-row:nth-child(1) .rank-num {
+    background: var(--yellow);
+    color: #5C4400;
+}
+
+.rank-label {
+    flex: 1;
+    font-size: 13.5px;
+    font-weight: 600;
+}
+
+.rank-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--ink-soft);
+    flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------
+   RESPONSIVE — this is the one page in the project that
+   needs to work on a phone (see the mobile hamburger nav above)
+   --------------------------------------------------------- */
+@media(max-width:900px) {
+    .stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width:860px) {
+    .sidebar {
+        position: fixed;
+        left: -240px;
+        top: 0;
+        transition: left 0.2s ease;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .sidebar-backdrop.open {
+        display: block;
+    }
+
+    .mobile-topbar {
+        display: flex;
+    }
+
+    main {
+        padding: 20px 18px 50px 18px;
+    }
+
+    .stat-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}

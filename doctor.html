@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doctor's Desk — Adeleke University Health Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="doctor.css" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- ============ LEFT NAV ============ -->
+      <aside class="sidebar">
+        <div class="brand">
+          <img src="assets/au-logo.png" alt="Adeleke University logo" />
+          <span class="brand-name">AU Health Portal</span>
+        </div>
+        <nav>
+          <button
+            class="nav-item active"
+            id="nav-patients"
+            onclick="switchTab('patients')"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <circle cx="9" cy="8" r="3.2" />
+              <path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6" />
+              <circle cx="17.5" cy="7.5" r="2.4" />
+              <path d="M15.5 13.2c2.6.3 4.5 2.4 4.5 5.3" />
+            </svg>
+            <span>Patients</span>
+          </button>
+          <button
+            class="nav-item"
+            id="nav-appointments"
+            onclick="switchTab('appointments')"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <rect x="3" y="4.5" width="18" height="16" rx="2" />
+              <path d="M3 9.5h18M8 3v3M16 3v3" />
+            </svg>
+            <span>Appointments</span>
+            <span class="nav-badge" id="pending-badge">0</span>
+          </button>
+          <button
+            class="nav-item"
+            id="nav-prescriptions"
+            onclick="switchTab('prescriptions')"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <path d="M6 3h6a5 5 0 010 10H9v8" />
+              <path d="M9 9h6l6 6" />
+            </svg>
+            <span>Prescriptions</span>
+          </button>
+        </nav>
+        <div class="sidebar-foot">
+          <div class="avatar" id="foot-avatar">DA</div>
+          <div>
+            <div class="foot-name" id="foot-name">Dr. Adewale</div>
+            <div class="foot-role">Doctor</div>
+            <button
+              class="logout-btn"
+              onclick="
+                sessionStorage.removeItem('loggedInRole');
+                window.location.href = 'index.html';
+              "
+            >
+              Log out
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ============ MAIN CONTENT ============ -->
+      <main>
+        <!-- ---------- PATIENTS TAB ---------- -->
+        <div id="tab-patients">
+          <div class="topbar">
+            <h1 class="page-title">Patients</h1>
+            <div class="page-sub">
+              Everyone registered on the AU Health Portal, A–Z
+            </div>
+          </div>
+
+          <div id="patients-list-view">
+            <div class="card">
+              <input
+                id="patient-search"
+                placeholder="Search by name..."
+                oninput="renderPatientsList()"
+              />
+            </div>
+            <div class="card" style="padding: 6px 20px">
+              <div id="az-patients"></div>
+            </div>
+          </div>
+
+          <div id="patient-detail-view" style="display: none"></div>
+        </div>
+
+        <!-- ---------- APPOINTMENTS TAB ---------- -->
+        <div id="tab-appointments" style="display: none">
+          <div class="topbar">
+            <h1 class="page-title">Appointments</h1>
+            <div class="page-sub">Booked by reception</div>
+          </div>
+          <div class="card">
+            <div id="appointments-table"></div>
+          </div>
+        </div>
+
+        <!-- ---------- PRESCRIPTIONS TAB ---------- -->
+        <div id="tab-prescriptions" style="display: none">
+          <div class="topbar">
+            <div class="card-title-row" style="margin-bottom: 0">
+              <div>
+                <h1 class="page-title">Prescriptions</h1>
+                <div class="page-sub">
+                  Every prescription written for a patient
+                </div>
+              </div>
+              <button class="btn btn-primary" onclick="openPrescriptionModal()">
+                + New Prescription
+              </button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title-row">
+              <div class="card-title" style="margin-bottom: 0">
+                All Prescriptions
+              </div>
+              <select id="rx-day-filter" onchange="renderPrescriptions()">
+                <option value="all">All</option>
+                <option value="today">Today</option>
+                <option value="yesterday">Yesterday</option>
+                <option value="thisWeek">This Week</option>
+                <option value="lastWeek">Last Week</option>
+                <option value="last2Weeks">Last 2 Weeks</option>
+                <option value="past3Months">Past 3 Months</option>
+              </select>
+            </div>
+            <div id="prescriptions-table"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- ============ NEW PRESCRIPTION MODAL ============ -->
+    <div class="modal-backdrop" id="rx-modal-backdrop">
+      <div class="modal">
+        <h3>New Prescription</h3>
+        <div class="field">
+          <label>Prescribing Doctor</label>
+          <input id="rx-doctor-display" disabled />
+        </div>
+        <div class="field" style="position: relative">
+          <label>Patient</label>
+          <input
+            id="rx-patient-input"
+            type="text"
+            placeholder="Start typing the patient's name..."
+            autocomplete="off"
+            oninput="renderRxSuggestions()"
+          />
+          <div id="rx-suggestions" class="rx-suggestions"></div>
+        </div>
+        <div class="field">
+          <label>Condition</label>
+          <input
+            id="rx-condition"
+            placeholder="e.g. Malaria, migraine, sprained ankle"
+          />
+        </div>
+        <div class="field">
+          <label>Medication</label>
+          <input
+            id="rx-medication"
+            placeholder="e.g. Coartem 20/120mg, 2x daily"
+          />
+        </div>
+        <div class="field">
+          <label>Date</label>
+          <input id="rx-date" type="date" />
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" onclick="closePrescriptionModal()">
+            Cancel
+          </button>
+          <button class="btn btn-primary" onclick="submitPrescription()">
+            Save Prescription
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="doctor.js"></script>
+  </body>
+</html>
